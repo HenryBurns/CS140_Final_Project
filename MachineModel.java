@@ -10,12 +10,70 @@ public class MachineModel {
 	private HaltCallback callback;
 	private boolean withGUI;
 	
+	private Job[] jobs = new Job[2]; //New from pt 2
+	private Job currentJob;//new
+	
+	public Job getCurrentJob(){
+		return currentJob;
+	}
+	
+	public void setJob(int i){
+		if(i!=1 || i!=0)
+			throw new IllegalArgumentException();
+		
+		currentJob.setCurrentAcc(cpu.accumulator);
+		currentJob.setCurrentIP(cpu.instructionPointer);
+		currentJob = jobs[i];
+		cpu.accumulator = currentJob.getCurrentAcc();
+		cpu.instructionPointer = currentJob.getCurrentIP();
+		cpu.memoryBase = currentJob.getStartmemoryIndex();
+	}
+
+	public void clearJob(){
+		memory.clearData(currentJob.getStartmemoryIndex(), currentJob.getStartmemoryIndex()+Memory.DATA_SIZE/2);
+		memory.clear(currentJob.getStartcodeIndex(), currentJob.getStartcodeIndex()+currentJob.getCodeSize());//not sure, he wanted memory.clearCode but that doesnt exist
+		cpu.accumulator =0;
+		cpu.instructionPointer =currentJob.getStartcodeIndex();
+		currentJob.reset();
+	}
+	
+	public void step(){
+		try{
+			int ip = cpu.instructionPointer;
+			if(ip<currentJob.getStartcodeIndex()||ip>=currentJob.getStartcodeIndex()+currentJob.getCodeSize())
+				throw new CodeAccessException();
+			int op = memory.getOp(ip);
+			int arg = memory.getArg(ip);
+			//get(op).execute(arg);
+		}
+		catch(Exception e){
+			callback.halt();
+			throw e;
+		}
+	}
+	
 	public MachineModel() {
 		this(false, null);
 	}
 	public MachineModel(boolean usingGUI, HaltCallback stopthing) {
 		withGUI = usingGUI;
 		callback = stopthing;
+		
+		for(int i =0; i<jobs.length;i++){
+			jobs[i] = new Job();
+		}
+			
+		currentJob = jobs[0];
+		
+		jobs[0].setStartcodeIndex(0);
+		jobs[0].setStartmemoryIndex(0);
+		
+		jobs[1].setStartcodeIndex(Memory.CODE_MAX/4);
+		jobs[1].setStartmemoryIndex(Memory.DATA_SIZE/2);
+		
+		for(int i =0; i<jobs.length;i++){
+			jobs[i].setCurrentState(States.NOTHING_LOADED);
+		}
 		
 		 //INSTRUCTION_MAP entry for "NOP"
         INSTRUCTIONS.put(0x0, arg -> {

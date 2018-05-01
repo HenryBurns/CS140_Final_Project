@@ -2,6 +2,7 @@ package project;
 
 import java.util.Map;
 import java.util.TreeMap;
+import projectview.States;
 
 public class MachineModel {
 	public final Map<Integer, Instruction> INSTRUCTIONS = new TreeMap<>();
@@ -18,7 +19,7 @@ public class MachineModel {
 	}
 	
 	public void setJob(int i){
-		if(i!=1 || i!=0)
+		if(i!=1 && i!=0)
 			throw new IllegalArgumentException();
 		
 		currentJob.setCurrentAcc(cpu.accumulator);
@@ -142,7 +143,7 @@ public class MachineModel {
        		cpu.incrementIP(1);
      });
      
-     	//INSTRUCTION_MAP entry for "JMPZ"
+     	//INSTRUCTION_MAP entry for "JMPZI"
      INSTRUCTIONS.put(0xB, arg -> {
     	 if(cpu.accumulator == 0)
         	 cpu.instructionPointer = arg;

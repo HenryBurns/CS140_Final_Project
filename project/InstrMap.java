@@ -12,12 +12,12 @@ public class InstrMap {
         toCode.put("LODN", 3);
         toCode.put("STO", 4);
         toCode.put("STON", 5);
-        toCode.put("JUMPR", 6);
+        toCode.put("JMPR", 6);
         toCode.put("JUMP", 7);
-        toCode.put("JUMPI", 8);
-        toCode.put("JUMPZR", 9);
-        toCode.put("JUMPZ", 0xA);
-        toCode.put("JUMPZI", 0xB);
+        toCode.put("JMPI", 8);
+        toCode.put("JMPZR", 9);
+        toCode.put("JMPZ", 0xA);
+        toCode.put("JMPZI", 0xB);
         toCode.put("ADDI", 0xC);
         toCode.put("ADD", 0xD);
         toCode.put("ADDN", 0xE);

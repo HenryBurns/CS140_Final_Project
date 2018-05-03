@@ -4,8 +4,10 @@ import projectview.States;
 
 import java.util.Map;
 import java.util.TreeMap;
+import projectview.States;
 
 public class MachineModel {
+
 	public final Map<Integer, Instruction> INSTRUCTIONS = new TreeMap<>();
 	private CPU cpu = new CPU();
 	private Memory memory = new Memory();
@@ -149,7 +151,7 @@ public class MachineModel {
        		cpu.incrementIP(1);
      });
      
-     	//INSTRUCTION_MAP entry for "JMPZ"
+     	//INSTRUCTION_MAP entry for "JMPZI"
      INSTRUCTIONS.put(0xB, arg -> {
     	 if(cpu.accumulator == 0)
         	 cpu.instructionPointer = arg;
@@ -341,16 +343,24 @@ public class MachineModel {
 	public Instruction get(int index) {
 		return INSTRUCTIONS.get(index);
 	}
+
 	public int[] getCode() {
 		return memory.getCode();
 	}
+
 	public int getOp(int i) {
 		return memory.getOp(i);
 	}
+
 	public int getArg(int i) {
 		return memory.getArg(i);
 	}
+
 	public void setCode(int index, int op, int arg) {
 		memory.setCode(index, op, arg);
+	}
+
+	public int getChangedIndex() {
+		return memory.getChangedIndex();
 	}
 }

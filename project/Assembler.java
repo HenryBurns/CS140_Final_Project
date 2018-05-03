@@ -5,7 +5,8 @@ import java.util.TreeSet;
 
 public interface Assembler {
     final static Set<String>  noArgument = new TreeSet<>(Arrays.asList("HALT", "NOP", "NOT"));
-        /**
+    int assemble(String inputFileName, String outputFileName, StringBuilder error);
+    /**
      * Method to assemble a file to its executable representation.
      * If the input has errors one or more of the errors will be reported
      * the StringBulder. The errors may not be the first error in
@@ -29,6 +30,4 @@ public interface Assembler {
      * is saved, -1 if the input or output files cannot be opened,
      * otherwise the line number of a reported error.
      */
-    int assemble(String inputFileName, String outputFileName, StringBuilder error);
-
 }

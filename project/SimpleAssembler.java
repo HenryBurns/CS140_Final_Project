@@ -17,8 +17,9 @@ public class SimpleAssembler implements Assembler{
     private String makeOutputCode(String[] parts){
         if(parts.length == 1)
             return InstrMap.toCode.get(parts[0]) + "\n" +0;
-        //if(parts.length == 2)
+        if(parts.length == 2)
             return InstrMap.toCode.get(parts[0]) + "\n" + Integer.parseInt(parts[1],16);
+        return "Hello";
     }
     private String makeOutputData(String[] parts){
         return  Integer.parseInt(parts[0],16) + "\n" + Integer.parseInt(parts[1],16);

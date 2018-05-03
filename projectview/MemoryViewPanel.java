@@ -35,8 +35,8 @@ public class MemoryViewPanel implements Observer {
         lower = lwr;
         gui.addObserver(this);
     }
-    public Jcomponent createMemoryDisplay(){
-        JPanel panel = new Jpanel();
+    public JComponent createMemoryDisplay(){
+        JPanel panel = new JPanel();
         panel.setLayout(new BorderLayout());
         Border border = BorderFactory.createTitledBorder(
                 BorderFactory.createLineBorder(Color.BLACK),

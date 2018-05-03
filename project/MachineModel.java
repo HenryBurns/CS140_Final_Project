@@ -5,6 +5,7 @@ import java.util.TreeMap;
 import projectview.States;
 
 public class MachineModel {
+
 	public final Map<Integer, Instruction> INSTRUCTIONS = new TreeMap<>();
 	private CPU cpu = new CPU();
 	private Memory memory = new Memory();
@@ -344,5 +345,9 @@ public class MachineModel {
 
 	public void setCode(int index, int op, int arg) {
 		memory.setCode(index, op, arg);
+	}
+
+	public int getChangedIndex() {
+		return memory.getChangedIndex();
 	}
 }

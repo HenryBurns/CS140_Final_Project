@@ -329,4 +329,20 @@ public class MachineModel {
 	public Instruction get(int index) {
 		return INSTRUCTIONS.get(index);
 	}
+
+	public int[] getCode() {
+		return memory.getCode();
+	}
+
+	public int getOp(int i) {
+		return memory.getOp(i);
+	}
+
+	public int getArg(int i) {
+		return memory.getArg(i);
+	}
+
+	public void setCode(int index, int op, int arg) {
+		memory.setCode(index, op, arg);
+	}
 }

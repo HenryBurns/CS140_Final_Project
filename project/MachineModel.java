@@ -1,5 +1,7 @@
 package project;
 
+import projectview.States;
+
 import java.util.Map;
 import java.util.TreeMap;
 import projectview.States;
@@ -57,6 +59,11 @@ public class MachineModel {
 	public MachineModel() {
 		this(false, null);
 	}
+
+	public int getChangedIndex() {
+		return memory.getChangedIndex();
+	}
+
 	public MachineModel(boolean usingGUI, HaltCallback stopthing) {
 		withGUI = usingGUI;
 		callback = stopthing;
@@ -300,9 +307,6 @@ public class MachineModel {
 			instructionPointer += val;
 		}	
 	}
-	int[] getData() {
-		return memory.getData();
-	}
 	public int getData(int index) {
 		return memory.getData(index);
 	}
@@ -321,6 +325,15 @@ public class MachineModel {
 	public void setInstructionPointer(int value) {
 		cpu.instructionPointer = value;
 	}
+
+	public void clear(int start, int end) {
+		memory.clear(start, end);
+	}
+
+	public void clearData(int start, int end) {
+		memory.clearData(start, end);
+	}
+
 	public int getMemoryBase() {
 		return cpu.memoryBase;
 	}

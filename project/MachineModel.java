@@ -250,6 +250,11 @@ public class MachineModel {
         		cpu.accumulator = 0;
             cpu.incrementIP(1);
         });
+		//INSTRUCTION_MAP entry for "JUMPN"
+		INSTRUCTIONS.put(0x1D, arg -> {
+			int arg1 = memory.getData(cpu.memoryBase+arg);
+			cpu.instructionPointer = currentJob.getStartcodeIndex() + arg1;
+		});
         //INSTRUCTION_MAP entry for "HALT"
         INSTRUCTIONS.put(0x1F, arg -> {
         	callback.halt();

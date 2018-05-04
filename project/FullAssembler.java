@@ -79,7 +79,11 @@ public class FullAssembler implements Assembler {
                     ": argument is not a hex number");
             return codeLine;
         }
+        if(retValue != 0) {
+            SimpleAssembler assembler = new SimpleAssembler();
+            assembler.assemble(inputFileName,outputFileName,error);
 
+        }
         return retValue;
     }
 }

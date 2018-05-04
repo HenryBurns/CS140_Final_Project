@@ -23,7 +23,6 @@ public class MenuBarBuilder implements Observer {
     JMenu createFileMenu(){
         JMenu menu = new JMenu("File");
         menu.setMnemonic(KeyEvent.VK_F);
-        JMenuItem assemble = new JMenuItem();
         assemble.setMnemonic(KeyEvent.VK_A);
         assemble.setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_A, ActionEvent.CTRL_MASK));
@@ -45,11 +44,10 @@ public class MenuBarBuilder implements Observer {
     }
     JMenu createExecuteMenu(){
         JMenu menu = new JMenu("Execute");
-        JMenuItem execute = new JMenuItem();
-        menu.add(execute);
-        execute.setAccelerator(KeyStroke.getKeyStroke(
+        menu.add(go);
+        go.setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_G, ActionEvent.CTRL_MASK));
-        execute.addActionListener(e -> view.execute());
+        go.addActionListener(e -> view.execute());
 
         return menu;
     }

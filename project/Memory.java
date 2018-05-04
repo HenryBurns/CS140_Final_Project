@@ -50,4 +50,14 @@ public class Memory {
 			 data[i] =0;
 		 changedIndex = -1;
 	 }
+
+	String getHex(int i){
+		return Integer.toHexString(code[2*i]).toUpperCase() + " " +
+				Integer.toHexString(code[2*i+1]).toUpperCase();
+	}
+
+	String getDecimal(int i){
+	 	return InstrMap.toMnemonic.get(code[2*i]) + " " +
+				code[2*i+1];
+	}
 }

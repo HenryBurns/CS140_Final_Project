@@ -361,4 +361,13 @@ public class MachineModel {
 	public void setCode(int index, int op, int arg) {
 		memory.setCode(index, op, arg);
 	}
+
+	public String getHex(int i){
+		return memory.getHex(i);
+	}
+
+	public String getDecimal(int i){
+		return memory.getDecimal(i);
+	}
+
 }

@@ -12,6 +12,7 @@ public class FullAssembler implements Assembler {
         int blankline = 0;
         int codeLine = 0;
         int value;
+        int address;
         String[] parts;
         int retValue = 0;
 
@@ -54,6 +55,7 @@ public class FullAssembler implements Assembler {
                             retValue = codeLine;
                         }
                         value = Integer.parseInt(parts[1], 16);
+                        address = Integer.parseInt(parts[0],16);
                         if(parts.length > 2){
                             error.append("\nError on line " + codeLine + ": this mnemonic has too many arguments");
                             retValue = codeLine;

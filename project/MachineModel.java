@@ -370,4 +370,67 @@ public class MachineModel {
 		return memory.getDecimal(i);
 	}
 
+	public void enter() {
+		getCurrentState().enter();
+	}
+
+	public boolean getAssembleFileActive() {
+		return getCurrentState().getAssembleFileActive();
+	}
+
+	public boolean getClearActive() {
+		return getCurrentState().getClearActive();
+	}
+
+	public boolean getLoadFileActive() {
+		return getCurrentState().getLoadFileActive();
+	}
+
+	public boolean getReloadActive() {
+		return getCurrentState().getReloadActive();
+	}
+
+	public boolean getRunningActive() {
+		return getCurrentState().getRunningActive();
+	}
+
+	public boolean getRunPauseActive() {
+		return getCurrentState().getRunPauseActive();
+	}
+
+	public boolean getStepActive() {
+		return getCurrentState().getStepActive();
+	}
+
+	public boolean getChangeJobActive() {
+		return getCurrentState().getChangeJobActive();
+	}
+
+	public String name() {
+		return getCurrentState().name();
+	}
+
+	public int ordinal() {
+		return getCurrentState().ordinal();
+	}
+
+	public int compareTo(States o) {
+		return getCurrentState().compareTo(o);
+	}
+
+	public Class<States> getDeclaringClass() {
+		return getCurrentState().getDeclaringClass();
+	}
+
+	public static <T extends Enum<T>> T valueOf(Class<T> enumType, String name) {
+		return Enum.valueOf(enumType, name);
+	}
+
+	public States getCurrentState(){
+		return currentJob.getCurrentState();
+	}
+
+	public void setCurrentState(States currState){
+		currentJob.setCurrentState(currState);
+	}
 }

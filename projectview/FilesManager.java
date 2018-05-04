@@ -3,6 +3,7 @@ import project.Assembler;
 import project.Job;
 import project.Loader;
 import project.MachineModel;
+import project.FullAssembler;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;

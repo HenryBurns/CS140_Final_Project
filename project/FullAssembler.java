@@ -1,52 +1,84 @@
 package project;
-
+import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.List;
+import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.Scanner;
-
 public class FullAssembler implements Assembler {
     public int assemble(String inputFileName, String outputFileName, StringBuilder error) {
         if (error == null) throw new IllegalArgumentException("Coding error: the error buffer is null");
-        List<String> code = new ArrayList<>();
-        List<String> data = new ArrayList<>();
         boolean pastData = false;
         boolean hasBlank = false;
-        boolean readingCode = false;
         int blankline = 0;
         int codeLine = 0;
-        try (Scanner scan = new Scanner(inputFileName)) {
+        int value;
+        String[] parts;
+        int retValue = 0;
+
+        try (Scanner scan = new Scanner(Paths.get(inputFileName))){
             while (scan.hasNextLine()) {
                 String temp = scan.nextLine();
                 codeLine++;
                 if (temp.trim().length() == 0) {
-                    if (hasBlank)
+                    if (hasBlank) {
                         error.append("\nIllegal blank line in the source file on line " + blankline);
-                    else {
+                        retValue = blankline;
+                    } else {
                         hasBlank = true;
                         blankline = codeLine;
                     }
                 }
-                if(temp.substring(0,1).equals(' ') || temp.substring(0,1).equals('\t'))
+                if (temp.substring(0, 1).equals(' ') || temp.substring(0, 1).equals('\t')) {
                     error.append("\nLine starts with illegal white space");
+                    retValue = codeLine;
+                }
                 if (temp.equalsIgnoreCase("DATA")) {
-                    if(!temp.equals("DATA"))
+                    if (!temp.equals("DATA")) {
                         error.append("\nLine does not have DATA in upper case");
+                        retValue = codeLine;
+                    }
                     pastData = true;
                     continue;
-                }
-                else if(pastData){
-                    temp = temp.split("\\s");
-                    // If you are in code and you split the line into parts using line.trim().split("\\s+"), then parts[0] must be contained in
-                    // InstrMap.toCode.keySet().  You also need to use the same trick that was used for DATA to be sure that the mnemonic, if present, is in upper case.
+                } else if (pastData) {
+                    parts = temp.split("\\s");
+                    if (!InstrMap.toCode.keySet().contains(parts[0])) {
+                        error.append("\nError on line " + (codeLine) + ": illegal mnemonic");
+                        retValue = codeLine;
+                    } else {
+                        if(noArgument.contains(parts[0])){
+                            error.append("\nError on line " + codeLine + ": this mnemonic cannot take arguments");
+                            retValue = codeLine;
+                        }
+                        if (!parts[0].toUpperCase().equals(parts[0])) {
+                            error.append("\nError on line " + codeLine + ": mnemonic must be upper case");
+                            retValue = codeLine;
+                        }
+                        value = Integer.parseInt(parts[1], 16);
+                        if(parts.length > 2){
+                            error.append("\nError on line " + codeLine + ": this mnemonic has too many arguments");
+                            retValue = codeLine;
+                        }
+                        if(parts.length < 2){
+                            error.append("\nError on line " + codeLine + ": this mnemonic is missing an argument");
+                            retValue = codeLine;
+                        }
+                    }
                 }
             }
-        } catch(FileNotFoundException){
-            error.append("\nUnable to open the source file"); // that is in the catch (FileNotFoundException)
+        } catch
+                (FileNotFoundException e) {
+            error.append("\nError: Unable to write the assembled program to the output file");
+            return  -1;
+        } catch (IOException e){
+            error.append("\nUnexplained IO Exception");
             return -1;
+        }catch (NumberFormatException e) {
+            error.append("\nError on line " + codeLine +
+                    ": argument is not a hex number");
+            return codeLine;
         }
 
-        return 0;
+        return retValue;
     }
 }
 

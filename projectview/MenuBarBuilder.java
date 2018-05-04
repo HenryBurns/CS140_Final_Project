@@ -55,20 +55,23 @@ public class MenuBarBuilder implements Observer {
     }
     JMenu createJobsMenu(){
         JMenu menu = new JMenu("Change Job");
-        JMenuItem setJob1 = new JMenuItem();
-        menu.add(setJob1);
-        setJob1.setAccelerator(KeyStroke.getKeyStroke(
+        menu.add(job0);
+        job0.setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_0, ActionEvent.CTRL_MASK));
-        setJob1.addActionListener(e -> view.setJob(0));
-        JMenuItem setJob2 = new JMenuItem();
-        menu.add(setJob2);
-        setJob2.setAccelerator(KeyStroke.getKeyStroke(
+        job0.addActionListener(e -> view.setJob(0));
+        menu.add(job1);
+        job1.setAccelerator(KeyStroke.getKeyStroke(
                 KeyEvent.VK_G, ActionEvent.CTRL_MASK));
-        setJob2.addActionListener(e -> view.setJob(1));
+        job1.addActionListener(e -> view.setJob(1));
 
         return menu;
     }
     public void update(Observable arg0, Object arg1){
         assemble.setEnabled(view.getCurrentState().getAssembleFileActive());
+        load.setEnabled(view.getCurrentState().getLoadFileActive());
+        exit.setEnabled(view.getCurrentState().getClearActive());
+        go.setEnabled(view.getCurrentState().getStepActive());
+        job0.setEnabled(view.getCurrentState().getChangeJobActive());
+        job1.setEnabled(view.getCurrentState().getClearActive());
     }
 }

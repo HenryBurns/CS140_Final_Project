@@ -1,8 +1,5 @@
 package projectview;
-import project.Assembler;
-import project.Job;
-import project.Loader;
-import project.MachineModel;
+import project.*;
 
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;

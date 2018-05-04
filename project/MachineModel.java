@@ -16,52 +16,9 @@ public class MachineModel {
 	
 	private Job[] jobs = new Job[2]; //New from pt 2
 	private Job currentJob;//new
-	
-	public Job getCurrentJob(){
-		return currentJob;
-	}
-	
-	public void setJob(int i){
-		if(i!=1 && i!=0)
-			throw new IllegalArgumentException();
-		
-		currentJob.setCurrentAcc(cpu.accumulator);
-		currentJob.setCurrentIP(cpu.instructionPointer);
-		currentJob = jobs[i];
-		cpu.accumulator = currentJob.getCurrentAcc();
-		cpu.instructionPointer = currentJob.getCurrentIP();
-		cpu.memoryBase = currentJob.getStartmemoryIndex();
-	}
 
-	public void clearJob(){
-		memory.clearData(currentJob.getStartmemoryIndex(), currentJob.getStartmemoryIndex()+Memory.DATA_SIZE/2);
-		memory.clear(currentJob.getStartcodeIndex(), currentJob.getStartcodeIndex()+currentJob.getCodeSize());//not sure, he wanted memory.clearCode but that doesnt exist
-		cpu.accumulator =0;
-		cpu.instructionPointer =currentJob.getStartcodeIndex();
-		currentJob.reset();
-	}
-	
-	public void step(){
-		try{
-			int ip = cpu.instructionPointer;
-			if(ip<currentJob.getStartcodeIndex()||ip>=currentJob.getStartcodeIndex()+currentJob.getCodeSize())
-				throw new CodeAccessException();
-			int op = memory.getOp(ip);
-			int arg = memory.getArg(ip);
-			//get(op).execute(arg);
-		}
-		catch(Exception e){
-			callback.halt();
-			throw e;
-		}
-	}
-	
 	public MachineModel() {
 		this(false, null);
-	}
-
-	public int getChangedIndex() {
-		return memory.getChangedIndex();
 	}
 
 	public MachineModel(boolean usingGUI, HaltCallback stopthing) {
@@ -307,6 +264,46 @@ public class MachineModel {
 			instructionPointer += val;
 		}	
 	}
+
+	public Job getCurrentJob(){
+		return currentJob;
+	}
+
+	public void setJob(int i){
+		if(i!=1 && i!=0)
+			throw new IllegalArgumentException();
+
+		currentJob.setCurrentAcc(cpu.accumulator);
+		currentJob.setCurrentIP(cpu.instructionPointer);
+		currentJob = jobs[i];
+		cpu.accumulator = currentJob.getCurrentAcc();
+		cpu.instructionPointer = currentJob.getCurrentIP();
+		cpu.memoryBase = currentJob.getStartmemoryIndex();
+	}
+
+	public void clearJob(){
+		memory.clearData(currentJob.getStartmemoryIndex(), currentJob.getStartmemoryIndex()+Memory.DATA_SIZE/2);
+		memory.clear(currentJob.getStartcodeIndex(), currentJob.getStartcodeIndex()+currentJob.getCodeSize());//not sure, he wanted memory.clearCode but that doesnt exist
+		cpu.accumulator =0;
+		cpu.instructionPointer =currentJob.getStartcodeIndex();
+		currentJob.reset();
+	}
+
+	public void step(){
+		try{
+			int ip = cpu.instructionPointer;
+			if(ip<currentJob.getStartcodeIndex()||ip>=currentJob.getStartcodeIndex()+currentJob.getCodeSize())
+				throw new CodeAccessException();
+			int op = memory.getOp(ip);
+			int arg = memory.getArg(ip);
+			//get(op).execute(arg);
+		}
+		catch(Exception e){
+			callback.halt();
+			throw e;
+		}
+	}
+
 	public int getData(int index) {
 		return memory.getData(index);
 	}
@@ -325,7 +322,9 @@ public class MachineModel {
 	public void setInstructionPointer(int value) {
 		cpu.instructionPointer = value;
 	}
-
+	public int getChangedIndex() {
+		return memory.getChangedIndex();
+	}
 	public void clear(int start, int end) {
 		memory.clear(start, end);
 	}
@@ -358,9 +357,5 @@ public class MachineModel {
 
 	public void setCode(int index, int op, int arg) {
 		memory.setCode(index, op, arg);
-	}
-
-	public int getChangedIndex() {
-		return memory.getChangedIndex();
 	}
 }

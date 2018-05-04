@@ -21,7 +21,7 @@ public class FullAssembler implements Assembler {
                 codeLine++;
                 if (temp.trim().length() == 0) {
                     if (hasBlank)
-                        error.append("\nIllegal blank line in the source file on line: " + blankline);
+                        error.append("\nIllegal blank line in the source file on line " + blankline);
                     else {
                         hasBlank = true;
                         blankline = codeLine;
@@ -35,18 +35,15 @@ public class FullAssembler implements Assembler {
                     pastData = true;
                     continue;
                 }
-                if (!pastData)
-                    code.add(temp);
-                else
-                    data.add(temp);
+                else if(pastData){
+                    temp = temp.split("\\s");
+                    // If you are in code and you split the line into parts using line.trim().split("\\s+"), then parts[0] must be contained in
+                    // InstrMap.toCode.keySet().  You also need to use the same trick that was used for DATA to be sure that the mnemonic, if present, is in upper case.
+                }
             }
         } catch(FileNotFoundException){
             error.append("\nUnable to open the source file"); // that is in the catch (FileNotFoundException)
             return -1;
-        }
-        for (int i = data.size() - 1; i >= 0; i++) {
-            if (data.get(i).equals(""))
-                data.remove(i);
         }
 
         return 0;

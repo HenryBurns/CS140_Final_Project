@@ -45,11 +45,12 @@ public class CodeViewPanel implements Observer {
         innerPanel.add(decimalPanel, BorderLayout.CENTER);
         innerPanel.add(hexPanel, BorderLayout.LINE_END);
         for(int i = 0; i < Memory.CODE_MAX/2; i++){
+            codeHex[i] = new JTextField(10);
+            codeDecimal[i] = new JTextField(10);
             numPanel.add(new JLabel(i+": ", JLabel.RIGHT));
             decimalPanel.add(codeDecimal[i-0]); // might be problems with lower
             hexPanel.add(codeHex[i-0]);
-            codeHex[i] = new JTextField(10);
-            codeDecimal[i] = new JTextField(10);
+
         }
         scroller = new JScrollPane(innerPanel);
         panel.add(scroller);

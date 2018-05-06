@@ -14,7 +14,7 @@ public class InstrMap {
         toCode.put("STON", 5);
         toCode.put("JMPR", 6);
         toCode.put("JUMP", 7);
-        toCode.put("JMPI", 8);
+        toCode.put("JUMPI", 8);
         toCode.put("JMPZR", 9);
         toCode.put("JMPZ", 0xA);
         toCode.put("JMPZI", 0xB);

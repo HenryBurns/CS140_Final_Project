@@ -70,6 +70,6 @@ public class MenuBarBuilder implements Observer {
         exit.setEnabled(view.getCurrentState().getClearActive());
         go.setEnabled(view.getCurrentState().getStepActive());
         job0.setEnabled(view.getCurrentState().getChangeJobActive());
-        job1.setEnabled(view.getCurrentState().getClearActive());
+        job1.setEnabled(view.getCurrentState().getChangeJobActive());
     }
 }

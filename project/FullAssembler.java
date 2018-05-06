@@ -15,21 +15,26 @@ public class FullAssembler implements Assembler {
         int address;
         String[] parts;
         int retValue = 0;
-
+        boolean codeAgain = false;
         try (Scanner scan = new Scanner(Paths.get(inputFileName))){
             while (scan.hasNextLine()) {
                 String temp = scan.nextLine();
                 codeLine++;
-                if (temp.trim().length() == 0) {
-                    if (hasBlank) {
+                if(hasBlank) {
+                    if (temp.trim().length() > 0)
+                        codeAgain = true;
+                    if(codeAgain) {
                         error.append("\nIllegal blank line in the source file on line " + blankline);
-                        retValue = blankline;
-                    } else {
-                        hasBlank = true;
-                        blankline = codeLine;
                     }
                 }
-                if (temp.substring(0, 1).equals(' ') || temp.substring(0, 1).equals('\t')) {
+                if (temp.trim().length() == 0) {
+                    if(!codeAgain)
+                        if (!hasBlank) {
+                            hasBlank = true;
+                            blankline = codeLine;
+                        }
+                }
+                else if (temp.substring(0, 1).equals(' ') || temp.substring(0, 1).equals('\t')) {
                     error.append("\nLine starts with illegal white space");
                     retValue = codeLine;
                 }
@@ -46,9 +51,10 @@ public class FullAssembler implements Assembler {
                         error.append("\nError on line " + (codeLine) + ": illegal mnemonic");
                         retValue = codeLine;
                     } else {
-                        if(noArgument.contains(parts[0])){
-                            error.append("\nError on line " + codeLine + ": this mnemonic cannot take arguments");
-                            retValue = codeLine;
+                        if(parts.length > 1)
+                            if(noArgument.contains(parts[0])){
+                                error.append("\nError on line " + codeLine + ": this mnemonic cannot take arguments");
+                                retValue = codeLine;
                         }
                         if (!parts[0].toUpperCase().equals(parts[0])) {
                             error.append("\nError on line " + codeLine + ": mnemonic must be upper case");

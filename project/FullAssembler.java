@@ -13,6 +13,7 @@ public class FullAssembler implements Assembler {
         int codeLine = 0;
         int value;
         int address;
+        boolean blankError = false;
         String[] parts;
         int retValue = 0;
         boolean codeAgain = false;
@@ -24,17 +25,17 @@ public class FullAssembler implements Assembler {
                     if (temp.trim().length() > 0)
                         codeAgain = true;
                     if(codeAgain) {
-                        error.append("\nIllegal blank line in the source file on line " + blankline);
+                        if(!blankError)
+                            error.append("\nIllegal blank line in the source file on line " + blankline);
+                        blankError = true;
                     }
                 }
                 if (temp.trim().length() == 0) {
-                    if(!codeAgain)
-                        if (!hasBlank) {
-                            hasBlank = true;
-                            blankline = codeLine;
-                        }
-                }
-                else if (temp.substring(0, 1).equals(' ') || temp.substring(0, 1).equals('\t')) {
+                    hasBlank = true;
+                    if(!hasBlank)
+                        blankline = codeLine;
+                    continue;
+                    } else if (temp.substring(0, 1).equals(' ') || temp.substring(0, 1).equals('\t')) {
                     error.append("\nLine starts with illegal white space");
                     retValue = codeLine;
                 }

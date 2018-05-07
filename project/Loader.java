@@ -13,7 +13,6 @@ public class Loader {
         try (Scanner input = new Scanner(file)) {
             boolean inCode = true;
             while(input.hasNextLine()) {
-                try {
                     String line1 = input.nextLine();
                     String line2 = input.nextLine();
 
@@ -32,7 +31,7 @@ public class Loader {
                     } else {
                         try{
                             int temp = parser.nextInt();
-                            model.setData(codeOffset + codeSize + memoryOffset, temp);
+                            model.setData(opCode + memoryOffset, temp);
                             parser.close();
                         } catch(NoSuchElementException e){
                             return "From Scanner: NoSuchElementException";
@@ -41,7 +40,9 @@ public class Loader {
                 } catch(ArrayIndexOutOfBoundsException e){
                     return  "Array Index " + e.getMessage();
                 }
-            }catch(NoSuchElementException e){
+
+
+            catch(NoSuchElementException e){
                     return "From Scanner: NoSuchElementException";
                 }
             }

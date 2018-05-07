@@ -85,12 +85,23 @@ public class FullAssembler implements Assembler {
                     ": argument is not a hex number");
             return codeLine;
         }
-        if(retValue != 0) {
+        if(retValue == 0) {
             SimpleAssembler assembler = new SimpleAssembler();
             assembler.assemble(inputFileName,outputFileName,error);
 
         }
         return retValue;
+    }
+
+    public static void main(String[] args) {
+        StringBuilder error = new StringBuilder();
+        System.out.println("Enter the name of the file without extension: ");
+        try (Scanner keyboard = new Scanner(System.in)) {
+            String filename = keyboard.nextLine();
+            int i = new FullAssembler().assemble(filename + ".pasm",
+                    filename + ".pexe", error);
+            System.out.println("result = " + i);
+        }
     }
 }
 

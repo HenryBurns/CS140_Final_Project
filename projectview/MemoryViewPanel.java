@@ -67,6 +67,7 @@ public class MemoryViewPanel implements Observer {
         panel.add(scroller);
         return panel;
     }
+
     @Override
     public void update(Observable arg0, Object arg1) {
         for(int i = lower; i < upper; i++) {

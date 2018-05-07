@@ -47,27 +47,33 @@ public class FullAssembler implements Assembler {
                     continue;
                 } else if (pastData) {
                     parts = temp.split("\\s");
+
+                        value = Integer.parseInt(parts[1], 16);
+                        address = Integer.parseInt(parts[0],16);
+                    }
+                if(!pastData){
+                    parts = temp.split("\\s");
                     if (!InstrMap.toCode.keySet().contains(parts[0])) {
                         error.append("\nError on line " + (codeLine) + ": illegal mnemonic");
                         retValue = codeLine;
                     } else {
-                        if(parts.length > 1)
-                            if(noArgument.contains(parts[0])){
+                        if (parts.length > 1)
+                            if (noArgument.contains(parts[0])) {
                                 error.append("\nError on line " + codeLine + ": this mnemonic cannot take arguments");
                                 retValue = codeLine;
-                        }
+                            } else {
+                                if (parts.length > 2) {
+                                    error.append("\nError on line " + codeLine + ": this mnemonic has too many arguments");
+                                    retValue = codeLine;
+                                }
+
+                                if (parts.length < 2) {
+                                    error.append("\nError on line " + codeLine + ": this mnemonic is missing an argument");
+                                    retValue = codeLine;
+                                }
+                            }
                         if (!parts[0].toUpperCase().equals(parts[0])) {
                             error.append("\nError on line " + codeLine + ": mnemonic must be upper case");
-                            retValue = codeLine;
-                        }
-                        value = Integer.parseInt(parts[1], 16);
-                        address = Integer.parseInt(parts[0],16);
-                        if(parts.length > 2){
-                            error.append("\nError on line " + codeLine + ": this mnemonic has too many arguments");
-                            retValue = codeLine;
-                        }
-                        if(parts.length < 2){
-                            error.append("\nError on line " + codeLine + ": this mnemonic is missing an argument");
                             retValue = codeLine;
                         }
                     }
@@ -85,7 +91,7 @@ public class FullAssembler implements Assembler {
                     ": argument is not a hex number");
             return codeLine;
         }
-        if(retValue != 0) {
+        if(retValue == 0) {
             SimpleAssembler assembler = new SimpleAssembler();
             assembler.assemble(inputFileName,outputFileName,error);
 

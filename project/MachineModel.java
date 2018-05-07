@@ -301,7 +301,7 @@ public class MachineModel {
 				throw new CodeAccessException();
 			int op = memory.getOp(ip);
 			int arg = memory.getArg(ip);
-			//get(op).execute(arg);
+			get(op).execute(arg);
 		}
 		catch(Exception e){
 			callback.halt();

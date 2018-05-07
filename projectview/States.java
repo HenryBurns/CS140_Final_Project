@@ -46,6 +46,8 @@ public enum States {
 						states[RELOAD] = true;
 						states[RUN] = true;
 						states[RUNNING] = false;
+						states[STEP] = true;
+						states[CHANGE_JOB] = true;
 				 } };
 	 
   

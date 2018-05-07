@@ -2,6 +2,8 @@ package project;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
 
@@ -27,6 +29,7 @@ public class Loader {
                             arg = parser.nextInt();
                             model.setCode(codeOffset + codeSize, opCode, arg);
                             codeSize++;
+                           // System.out.println("here");
                         }
                     } else {
                         try{
@@ -46,6 +49,10 @@ public class Loader {
                     return "From Scanner: NoSuchElementException";
                 }
             }
+            for (Integer val:model.getCode()) {
+                //System.out.println(val);
+            }
+
             return "" + codeSize;
         } catch(FileNotFoundException e){
             return "File " + file.getName() + " Not Found";

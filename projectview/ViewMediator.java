@@ -187,7 +187,7 @@ public class ViewMediator extends Observable {
 		model.setCurrentState(States.PROGRAM_LOADED_NOT_AUTOSTEPPING);
 		model.getCurrentState().enter();
 		setChanged();
-		notifyObservers();
+		notifyObservers(s);
 	}
 
 	private void createAndShowGUI(){

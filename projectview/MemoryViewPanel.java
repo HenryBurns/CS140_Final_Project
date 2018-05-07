@@ -70,6 +70,7 @@ public class MemoryViewPanel implements Observer {
 
     @Override
     public void update(Observable arg0, Object arg1) {
+        //System.out.println("entering update of memory view");
         for(int i = lower; i < upper; i++) {
             dataDecimal[i-lower].setText("" + model.getData(i));
             dataHex[i-lower].setText(Integer.toHexString(model.getData(i)));

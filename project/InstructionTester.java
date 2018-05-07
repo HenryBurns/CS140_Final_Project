@@ -1,13 +1,13 @@
 package project;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
+//import static org.junit.Assert.assertArrayEquals;
+//import static org.junit.Assert.assertEquals;
 
-import org.junit.Before;
-import org.junit.Test;
+//import org.junit.Before;
+//import org.junit.Test;
 
 public class InstructionTester {
-	MachineModel machine = new MachineModel();
+	/*MachineModel machine = new MachineModel();
 	int[] dataCopy = new int[Memory.DATA_SIZE];
 	int accInit;
 	int ipInit;
@@ -1055,5 +1055,5 @@ public class InstructionTester {
         //Accumulator is 1
         assertEquals("Accumulator is 0", 0,
                 machine.getAccumulator());
-	}
+	}*/
 }

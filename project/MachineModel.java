@@ -275,7 +275,7 @@ public class MachineModel {
 	}
 
 	public void setJob(int i){
-		if(i!=1 && i!=0)
+		if(!(i==1 || i==0))
 			throw new IllegalArgumentException();
 
 		currentJob.setCurrentAcc(cpu.accumulator);

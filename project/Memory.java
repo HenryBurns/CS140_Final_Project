@@ -46,7 +46,7 @@ public class Memory {
 	 }
 	 
 	 void clearData(int start, int end){
-		 for(int i = start; i<=end;i++)
+		 for(int i = start; i<end;i++)
 			 data[i] =0;
 		 changedIndex = -1;
 	 }

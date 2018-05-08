@@ -33,8 +33,8 @@ public class FullAssembler implements Assembler {
                     hasBlank = true;
                     continue;
                 }
-                else if (temp.substring(0, 1).equals(' ') || temp.substring(0, 1).equals('\t')) {
-                    error.append("\nLine starts with illegal white space");
+                else if (Character.isWhitespace(temp.charAt(0))){
+                    error.append("\nLine " + codeLine + " starts with illegal white space");
                     retValue = codeLine;
                 }
                 if (pastData) {
@@ -73,32 +73,36 @@ public class FullAssembler implements Assembler {
                 }
                 if(!pastData){
                     parts = temp.trim().split("\\s+");
+                    System.out.println(parts.length);
                     if (!InstrMap.toCode.keySet().contains(parts[0])) {
                         error.append("\nError on line " + (codeLine) + ": illegal mnemonic");
                         retValue = codeLine;
                     } else {
-                        if(parts.length < 1)
-                            if (noArgument.contains(parts[0])) {
+                        if (noArgument.contains(parts[0])) {
+                            if(parts.length > 1) {
                                 error.append("\nError on line " + codeLine + ": this mnemonic cannot take arguments");
                                 retValue = codeLine;
                             }
+
+                        }
                             else {
-                                try {
-                                    System.out.println("PART 1: " + parts[1]);
-                                    value = Integer.parseInt(parts[1], 16);
-                                } catch (NumberFormatException e) {
-                                    error.append("\nError on line " + codeLine +
-                                            ":  non-numeric value");
-                                    retValue = codeLine;
-                                }
                                 if (parts.length > 2) {
                                     error.append("\nError on line " + codeLine + ": this mnemonic has too many arguments");
                                     retValue = codeLine;
                                 }
-
-                                if (parts.length < 2) {
+                                else if (parts.length < 2) {
                                     error.append("\nError on line " + codeLine + ": this mnemonic is missing an argument");
                                     retValue = codeLine;
+                                }
+                                else{
+                                    try {
+                                        System.out.println("PART 1: " + parts[1]);
+                                        value = Integer.parseInt(parts[1], 16);
+                                    } catch (NumberFormatException e) {
+                                        error.append("\nError on line " + codeLine +
+                                                ":  non-numeric value");
+                                        retValue = codeLine;
+                                    }
                                 }
 
                             }

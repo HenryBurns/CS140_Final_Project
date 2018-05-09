@@ -34,6 +34,7 @@ public class FullAssembler implements Assembler {
                     continue;
                 }
                 else if (Character.isWhitespace(temp.charAt(0))){
+                    //temp.substring(0,1).equals(" ") || ("\t")
                     error.append("\nLine " + codeLine + " starts with illegal white space");
                     retValue = codeLine;
                 }
@@ -45,7 +46,6 @@ public class FullAssembler implements Assembler {
                     }
                     else {
                         try {
-                            System.out.println("PART 1: " + parts[1]);
                             value = Integer.parseInt(parts[1], 16);
                         } catch (NumberFormatException e) {
                             error.append("\nError on line " + codeLine +
@@ -53,7 +53,6 @@ public class FullAssembler implements Assembler {
                             retValue = codeLine;
                         }
                         try {
-                            System.out.println("PART 0: " + parts[0]);
                             address = Integer.parseInt(parts[0], 16);
                         } catch (NumberFormatException e) {
                             error.append("\nError on line " + codeLine +
@@ -73,7 +72,6 @@ public class FullAssembler implements Assembler {
                 }
                 if(!pastData){
                     parts = temp.trim().split("\\s+");
-                    System.out.println(parts.length);
                     if (!InstrMap.toCode.keySet().contains(parts[0])) {
                         error.append("\nError on line " + (codeLine) + ": illegal mnemonic");
                         retValue = codeLine;
@@ -96,7 +94,6 @@ public class FullAssembler implements Assembler {
                                 }
                                 else{
                                     try {
-                                        System.out.println("PART 1: " + parts[1]);
                                         value = Integer.parseInt(parts[1], 16);
                                     } catch (NumberFormatException e) {
                                         error.append("\nError on line " + codeLine +
